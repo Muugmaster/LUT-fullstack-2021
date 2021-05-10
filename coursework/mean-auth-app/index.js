@@ -19,11 +19,11 @@ require('./utils/passport')(passport)
 
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.get('/', (req, res) => {
-  res.send('Invalid endpoint')
-})
-
 app.use('/users', usersRoute)
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'))
+})
 
 mongoose
   .connect(config.MONGODB_URI, {
