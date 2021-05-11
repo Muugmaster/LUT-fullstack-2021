@@ -1,6 +1,7 @@
 import express, { Response } from 'express'
 import cors from 'cors'
 import passport from 'passport'
+import passportConfig from './utils/passport'
 const app = express()
 
 // Routes
@@ -10,6 +11,7 @@ app.use(cors())
 app.use(express.json())
 app.use(passport.initialize())
 app.use(passport.session())
+passportConfig(passport)
 
 app.use('/api/users', userRouter)
 

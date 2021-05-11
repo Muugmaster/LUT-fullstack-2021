@@ -26,4 +26,39 @@ usersRouter.post('/register', async (req: Request, res: Response) => {
   return res.json({ success: true, user: savedUser })
 })
 
+// Authenticate
+usersRouter.post('/authenticate', async (req: Request, res: Response) => {
+  const { username, password } = req.body
+
+  const user = await User.findOne({ username: username })
+  const passwordCorrect =
+    user === null ? false : await bcrypt.compare(password, user.password)
+
+  if (!(user && passwordCorrect)) {
+    return res
+      .status(401)
+      .json({ success: false, message: 'Invalid username or password' })
+  }
+
+  const userForToken = {
+    username: user.username,
+    id: user._id,
+  }
+
+  const token = jwt.sign(userForToken, config.SECRET!)
+
+  res.status(200).json({ success: true, token, user: userForToken })
+})
+
+// Profile info
+usersRouter.get(
+  '/profile',
+  passport.authenticate('jwt', { session: false }),
+  async (req: Request, res: Response) => {
+    res.json({ user: req.user })
+  }
+)
+
+//@TODO Update users
+
 export default usersRouter
