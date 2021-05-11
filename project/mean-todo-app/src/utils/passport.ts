@@ -15,6 +15,7 @@ export default (passport: PassportStatic) => {
         }
 
         if (user) {
+          console.log('passport', user)
           return done(null, user)
         } else {
           return done(null, false)

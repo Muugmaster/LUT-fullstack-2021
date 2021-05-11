@@ -1,9 +1,10 @@
 import mongoose from 'mongoose'
 
-export interface IUser extends Document {
+export interface IUser extends mongoose.Document {
   username: string
   email: string
   password: string
+  todos: mongoose.Schema.Types.ObjectId[]
 }
 
 // User schema
@@ -21,6 +22,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  todos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Todo' }],
 })
 
 UserSchema.set('toJSON', {

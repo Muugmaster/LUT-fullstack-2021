@@ -1,14 +1,15 @@
 import mongoose from 'mongoose'
 
 export interface ITodo extends Document {
-  name: string
+  title: string
   description: string
   confirm: boolean
+  user: mongoose.Schema.Types.ObjectId[]
 }
 
 // Todo schema
 const TodoSchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
     required: true,
   },
@@ -19,6 +20,12 @@ const TodoSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  user: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
 })
 
 TodoSchema.set('toJSON', {
