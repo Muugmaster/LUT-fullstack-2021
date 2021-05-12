@@ -41,7 +41,6 @@ todosRouter.post(
     //  @TODO fix somehow
     // @ts-ignore
     const user = await User.findById(req.user!._id)
-    console.log('user', user)
 
     const todo = new Todo({
       title,
