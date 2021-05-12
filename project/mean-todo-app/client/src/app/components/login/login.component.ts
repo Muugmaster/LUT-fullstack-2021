@@ -28,6 +28,11 @@ export class LoginComponent implements OnInit {
     }, timeout);
   }
 
+  clearForm() {
+    this.username = '';
+    this.password = '';
+  }
+
   onLoginSubmit() {
     const user = {
       username: this.username,
@@ -38,10 +43,15 @@ export class LoginComponent implements OnInit {
       console.log(data);
       if (data && data.success) {
         console.log('LOGGED IN');
-        this.showNotification('You are logged in', 'success', 3000);
+        this.authService.storeUserData(data.token, data.user);
+        this.router.navigate(['/']);
       } else {
-        console.log('NOPE');
-        this.showNotification('Something went wrong', 'danger', 3000);
+        this.showNotification(
+          data.message ? data.message : 'Something went wrong',
+          'danger',
+          3000
+        );
+        this.clearForm();
       }
     });
   }
