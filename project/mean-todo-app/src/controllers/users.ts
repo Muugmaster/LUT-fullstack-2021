@@ -23,7 +23,7 @@ usersRouter.post('/register', async (req: Request, res: Response) => {
 
   const savedUser = await user.save()
 
-  return res.json({ success: true, user: savedUser })
+  return res.status(201).json({ success: true, user: savedUser })
 })
 
 // Authenticate
@@ -55,7 +55,7 @@ usersRouter.get(
   '/profile',
   passport.authenticate('jwt', { session: false }),
   async (req: Request, res: Response) => {
-    res.json({ user: req.user })
+    res.status(200).json({ user: req.user })
   }
 )
 

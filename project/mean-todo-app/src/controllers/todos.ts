@@ -20,7 +20,9 @@ todosRouter.get(
     )
 
     if (todos.length <= 0) {
-      return res.json({ success: false, message: 'No todos where found!' })
+      return res
+        .status(404)
+        .json({ success: false, message: 'No todos where found!' })
     }
 
     return res.status(200).json({ success: true, todos })
@@ -35,7 +37,7 @@ todosRouter.post(
     const { title, description } = req.body
 
     if (!title || !description) {
-      return res.json({
+      return res.status(403).json({
         success: false,
         message: 'Title and description is needed',
       })
@@ -52,7 +54,7 @@ todosRouter.post(
     const savedTodo = await todo.save()
     user!.todos = user!.todos.concat(savedTodo._id)
     await user!.save()
-    return res.status(200).json({ success: true, todo: savedTodo.toJSON() })
+    return res.status(201).json({ success: true, todo: savedTodo.toJSON() })
   }
 )
 
