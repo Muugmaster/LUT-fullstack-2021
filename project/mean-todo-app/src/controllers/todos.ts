@@ -11,11 +11,13 @@ todosRouter.get(
   '/',
   passport.authenticate('jwt', { session: false }),
   async (req: Request, res: Response) => {
-    //@TODO check how to fix this type thing
-    //@ts-ignore
-    const todos = await Todo.find({ user: req.user._id }).populate('user', {
-      username: 1,
-    })
+    // @TODO check for better implementation
+    const todos = await Todo.find({ user: (req as any).user._id }).populate(
+      'user',
+      {
+        username: 1,
+      }
+    )
 
     if (todos.length <= 0) {
       return res.json({ success: false, message: 'No todos where found!' })
@@ -38,9 +40,8 @@ todosRouter.post(
         message: 'Title and description is needed',
       })
     }
-    //  @TODO fix somehow
-    // @ts-ignore
-    const user = await User.findById(req.user!._id)
+    // @TODO check for better implementation
+    const user = await User.findById((req as any).user!._id)
 
     const todo = new Todo({
       title,
