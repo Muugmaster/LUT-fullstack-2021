@@ -34,7 +34,7 @@ todosRouter.post(
   '/',
   passport.authenticate('jwt', { session: false }),
   async (req: Request, res: Response) => {
-    const { title, description } = req.body
+    const { title, description, confirm } = req.body
 
     if (!title || !description) {
       return res.status(403).json({
@@ -48,6 +48,7 @@ todosRouter.post(
     const todo = new Todo({
       title,
       description,
+      confirm,
       user: user!._id,
     })
 

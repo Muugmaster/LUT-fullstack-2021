@@ -13,8 +13,9 @@ interface IUser {
 export class AuthService {
   private registerUrl = 'http://localhost:5000/api/users/register';
   private loginUrl = 'http://localhost:5000/api/users/authenticate';
+  private todoUrl = 'http://localhost:5000/api/todos';
 
-  authToken: string | undefined;
+  authToken!: string | null;
   user: IUser | undefined;
 
   httpOptions = {
@@ -25,7 +26,11 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  registerUser(user: { username: string; email: string; password: string }) {
+  registerUser(user: {
+    username: string | undefined;
+    email: string | undefined;
+    password: string | undefined;
+  }) {
     return this.http.post(this.registerUrl, user, this.httpOptions);
   }
 
@@ -42,5 +47,23 @@ export class AuthService {
     localStorage.setItem('user', JSON.stringify(user));
     this.authToken = token;
     this.user = user;
+  }
+
+  loadToken() {
+    const token = localStorage.getItem('id_token');
+    this.authToken = token;
+  }
+
+  getUserTodos() {
+    this.loadToken();
+
+    const authHeader = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.authToken}`,
+      }),
+    };
+
+    return this.http.get(this.todoUrl, authHeader);
   }
 }

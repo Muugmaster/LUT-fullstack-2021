@@ -14,6 +14,7 @@ export class ValidateService {
 
   validateUserRegister(user: IUser) {
     const { username, email, password } = user;
+    console.log(user);
 
     if (
       username === undefined ||
@@ -26,10 +27,10 @@ export class ValidateService {
     }
   }
 
-  validateEmail(email: string) {
+  validateEmail(email: string | undefined) {
     const re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (re.test(email)) {
+    if (email && re.test(email)) {
       return true;
     } else {
       return false;

@@ -9,9 +9,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  username: string | undefined;
-  email: string | undefined;
-  password: string | undefined;
+  username!: string | undefined;
+  email!: string | undefined;
+  password!: string | undefined;
 
   constructor(
     private authService: AuthService,
@@ -35,12 +35,18 @@ export class RegisterComponent implements OnInit {
     }
 
     // Check email
-    if (!this.validate.validateEmail(user.email!)) {
+    if (!this.validate.validateEmail(user.email)) {
       console.log('email is wrong');
       return false;
     }
 
-    console.log('oo jee');
-    return true;
+    return this.authService.registerUser(user).subscribe((data: any) => {
+      console.log(data);
+      if (data.success) {
+        this.router.navigate(['/login']);
+      } else {
+        this.router.navigate(['/register']);
+      }
+    });
   }
 }

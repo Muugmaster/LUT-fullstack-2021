@@ -1,0 +1,31 @@
+<div class="card mx-auto shadow col-sm-6">
+  <div class="card-body">
+    <div *ngIf="todos">
+      <h2 class="page-header text-center">TODOS</h2>
+      <ul class="list-group">
+        <ng-container *ngFor="let todo of todos" class="list-group-item">
+          <div
+            class="card mx-auto shadow col-sm-10 list-group-item mb-1"
+            *ngIf="todo.confirm"
+          >
+            <div class="card-body text-center">
+              <p style="text-decoration: line-through">
+                {{ todo.title + " " + todo.description }}
+              </p>
+            </div>
+          </div>
+          <div
+            class="card mx-auto shadow col-sm-10 list-group-item-dark mb-1"
+            *ngIf="!todo.confirm"
+          >
+            <div class="card-body text-center">
+              <p>
+                {{ todo.title + " " + todo.description }}
+              </p>
+            </div>
+          </div>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+</div>
