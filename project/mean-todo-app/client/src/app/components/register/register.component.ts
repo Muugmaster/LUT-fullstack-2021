@@ -34,6 +34,12 @@ export class RegisterComponent implements OnInit {
       return false;
     }
 
+    // Check email
+    if (!this.validate.validateEmail(user.email!)) {
+      console.log('email is wrong');
+      return false;
+    }
+
     console.log('oo jee');
     return true;
   }
