@@ -34,6 +34,20 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  addTodo() {
+    const todo = {
+      title: 'moi',
+      description: this.description,
+      confirm: false,
+    };
+
+    return this.authService.addTodo(todo).subscribe((data) => {
+      console.log(data);
+      this.description = undefined;
+      this.getTodos();
+    });
+  }
+
   confirmTodo(id: string) {
     console.log('id', id);
     return this.authService.getOneUserTodo(id).subscribe((data: any) => {

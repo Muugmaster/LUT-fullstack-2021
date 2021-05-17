@@ -92,4 +92,17 @@ export class AuthService {
 
     return this.http.put(`${this.todoUrl}/${id}`, todo, authHeader);
   }
+
+  addTodo(todo: any) {
+    this.loadToken();
+
+    const authHeader = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.authToken}`,
+      }),
+    };
+
+    return this.http.post(this.todoUrl, todo, authHeader);
+  }
 }
