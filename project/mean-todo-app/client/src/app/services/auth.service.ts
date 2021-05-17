@@ -66,4 +66,30 @@ export class AuthService {
 
     return this.http.get(this.todoUrl, authHeader);
   }
+
+  getOneUserTodo(id: string) {
+    this.loadToken();
+
+    const authHeader = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.authToken}`,
+      }),
+    };
+
+    return this.http.get(`${this.todoUrl}/${id}`, authHeader);
+  }
+
+  confirmTodo(todo: any, id: string) {
+    this.loadToken();
+
+    const authHeader = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.authToken}`,
+      }),
+    };
+
+    return this.http.put(`${this.todoUrl}/${id}`, todo, authHeader);
+  }
 }
