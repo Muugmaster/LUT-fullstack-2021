@@ -45,7 +45,12 @@
               </p>
             </div>
             <div>
-              <button class="p-2 m-2 btn btn-secondary">
+              <button
+                (click)="getTodo(todo.id)"
+                class="p-2 m-2 btn btn-secondary"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -63,6 +68,57 @@
                   />
                 </svg>
               </button>
+              <!-- Modal -->
+              <div
+                class="modal fade"
+                id="exampleModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">
+                        Edit To Do
+                      </h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+
+                    <div class="modal-body">
+                      <input
+                        [(ngModel)]="editTodo"
+                        name="editTodo"
+                        type="text"
+                        class="form-control"
+                        placeholder="{{ editTodo }}"
+                      />
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        (click)="updateTodo()"
+                        type="submit"
+                        class="btn btn-primary"
+                        data-bs-dismiss="modal"
+                      >
+                        Save changes
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <button (click)="delTodo(todo.id)" class="p-2 btn btn-danger">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +147,12 @@
               </p>
             </div>
             <div>
-              <button class="p-2 m-2 btn btn-secondary">
+              <button
+                (click)="getTodo(todo.id)"
+                class="p-2 m-2 btn btn-secondary"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"

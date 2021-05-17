@@ -14,6 +14,10 @@ export class DashboardComponent implements OnInit {
   todo: string | undefined;
   confirm: boolean | undefined;
 
+  editTodo: string | undefined;
+  editTodoId: string | undefined;
+  editTodoConfirm: boolean | undefined;
+
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
@@ -32,6 +36,16 @@ export class DashboardComponent implements OnInit {
         return false;
       }
     );
+  }
+
+  getTodo(id: string) {
+    console.log('id', id);
+    return this.authService.getOneUserTodo(id).subscribe((data: any) => {
+      console.log(data);
+      this.editTodo = data.todo.todo;
+      this.editTodoId = data.todo.id;
+      this.editTodoConfirm = data.todo.confirm;
+    });
   }
 
   addTodo() {
@@ -69,5 +83,24 @@ export class DashboardComponent implements OnInit {
         this.getTodos();
       });
     });
+  }
+
+  updateTodo() {
+    console.log('id', this.editTodoId);
+
+    const updatedTodo = {
+      todo: this.editTodo,
+      confirm: this.editTodoConfirm,
+    };
+
+    this.authService
+      .confirmTodo(updatedTodo, this.editTodoId!)
+      .subscribe((data) => {
+        console.log('update   ', data);
+        this.editTodo = undefined;
+        this.editTodoId = undefined;
+        this.editTodoConfirm = undefined;
+        this.getTodos();
+      });
   }
 }
