@@ -11,8 +11,7 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit {
   todos: any;
 
-  title: string | undefined;
-  description: string | undefined;
+  todo: string | undefined;
   confirm: boolean | undefined;
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -29,6 +28,7 @@ export class DashboardComponent implements OnInit {
       },
       (err) => {
         console.log(err);
+        this.todos = undefined;
         return false;
       }
     );
@@ -36,14 +36,20 @@ export class DashboardComponent implements OnInit {
 
   addTodo() {
     const todo = {
-      title: 'moi',
-      description: this.description,
+      todo: this.todo,
       confirm: false,
     };
 
     return this.authService.addTodo(todo).subscribe((data) => {
       console.log(data);
-      this.description = undefined;
+      this.todo = undefined;
+      this.getTodos();
+    });
+  }
+
+  delTodo(id: string) {
+    console.log('delId', id);
+    return this.authService.delTodo(id).subscribe((data) => {
       this.getTodos();
     });
   }
@@ -54,8 +60,7 @@ export class DashboardComponent implements OnInit {
       console.log(data.todo);
 
       const updatedTodo = {
-        title: data.todo.title,
-        description: data.todo.description,
+        todo: data.todo.todo,
         confirm: !data.todo.confirm,
       };
 

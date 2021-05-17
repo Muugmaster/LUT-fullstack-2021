@@ -1,20 +1,16 @@
 import mongoose from 'mongoose'
 
 export interface ITodo extends mongoose.Document {
-  title: string
-  description: string
+  todo: string
   confirm: boolean
   user: mongoose.Schema.Types.ObjectId[]
 }
 
 // Todo schema
 const TodoSchema = new mongoose.Schema({
-  title: {
+  todo: {
     type: String,
     required: true,
-  },
-  description: {
-    type: String,
   },
   confirm: {
     type: Boolean,

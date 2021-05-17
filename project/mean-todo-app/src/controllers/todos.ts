@@ -53,25 +53,24 @@ todosRouter.post(
   '/',
   passport.authenticate('jwt', { session: false }),
   async (req: Request, res: Response) => {
-    const { title, description, confirm } = req.body
+    const { todo, confirm } = req.body
 
-    if (!title || !description) {
+    if (!todo) {
       return res.status(403).json({
         success: false,
-        message: 'Title and description is needed',
+        message: 'Todo is needed',
       })
     }
     // @TODO check for better implementation
     const user = await User.findById((req as any).user!._id)
 
-    const todo = new Todo({
-      title,
-      description,
+    const newTodo = new Todo({
+      todo,
       confirm,
       user: user!._id,
     })
 
-    const savedTodo = await todo.save()
+    const savedTodo = await newTodo.save()
     user!.todos = user!.todos.concat(savedTodo._id)
     await user!.save()
     return res.status(201).json({ success: true, todo: savedTodo.toJSON() })
@@ -83,13 +82,13 @@ todosRouter.put(
   '/:id',
   passport.authenticate('jwt', { session: false }),
   async (req: Request, res: Response) => {
-    const { title, description, confirm } = req.body
+    const { todo, confirm } = req.body
     const id = req.params.id
     // const user = await User.findById((req as any).user!._id)
 
     const updatedTodo = await Todo.findByIdAndUpdate(
       { _id: id },
-      { title, description, confirm },
+      { todo, confirm },
       { new: true }
     )
 
@@ -98,5 +97,17 @@ todosRouter.put(
 )
 
 // Delete update
+todosRouter.delete(
+  '/:id',
+  passport.authenticate('jwt', { session: false }),
+  async (req: Request, res: Response) => {
+    const id = req.params.id
+    // const user = await User.findById((req as any).user!._id)
+
+    const deletedTodo = await Todo.deleteOne({ _id: id })
+
+    res.status(204).json({ success: true, deletedTodo })
+  }
+)
 
 export default todosRouter
