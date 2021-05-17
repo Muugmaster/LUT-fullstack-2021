@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 interface IUser {
   id: string;
@@ -117,5 +118,16 @@ export class AuthService {
     };
 
     return this.http.delete(`${this.todoUrl}/${id}`, authHeader);
+  }
+
+  loggedIn() {
+    const helper = new JwtHelperService();
+    return helper.isTokenExpired(this.authToken!);
+  }
+
+  logout() {
+    this.authToken = null;
+    this.user = undefined;
+    localStorage.clear();
   }
 }

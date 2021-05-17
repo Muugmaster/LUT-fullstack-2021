@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
       if (data && data.success) {
         console.log('LOGGED IN');
         this.authService.storeUserData(data.token, data.user);
-        this.router.navigate(['/']);
+        this.router.navigate(['/dashboard']);
       } else {
         this.showNotification(
           data.message ? data.message : 'Something went wrong',
