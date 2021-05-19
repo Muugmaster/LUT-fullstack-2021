@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/_alert';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +19,16 @@ export class DashboardComponent implements OnInit {
   editTodoId: string | undefined;
   editTodoConfirm: boolean | undefined;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  options = {
+    autoClose: true,
+    keepAfterRouteChange: true,
+  };
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    public alertService: AlertService
+  ) {}
 
   ngOnInit(): void {
     this.getTodos();
@@ -54,10 +64,21 @@ export class DashboardComponent implements OnInit {
       confirm: false,
     };
 
-    return this.authService.addTodo(todo).subscribe((data) => {
+    return this.authService.addTodo(todo).subscribe((data: any) => {
       console.log(data);
-      this.todo = undefined;
-      this.getTodos();
+      if (data && data.success) {
+        this.todo = undefined;
+        this.getTodos();
+        this.alertService.success(
+          `"${data.todo.todo}" added successfully!`,
+          this.options
+        );
+      } else {
+        this.alertService.error(
+          data.message ? data.message : 'Something went wrong',
+          this.options
+        );
+      }
     });
   }
 
@@ -65,6 +86,7 @@ export class DashboardComponent implements OnInit {
     console.log('delId', id);
     return this.authService.delTodo(id).subscribe((data) => {
       this.getTodos();
+      this.alertService.warn('To do deleted!', this.options);
     });
   }
 
@@ -88,19 +110,26 @@ export class DashboardComponent implements OnInit {
   updateTodo() {
     console.log('id', this.editTodoId);
 
-    const updatedTodo = {
+    const updatedTodo: {
+      todo: string | undefined;
+      confirm: boolean | undefined;
+    } = {
       todo: this.editTodo,
       confirm: this.editTodoConfirm,
     };
 
     this.authService
       .confirmTodo(updatedTodo, this.editTodoId!)
-      .subscribe((data) => {
+      .subscribe((data: any) => {
         console.log('update   ', data);
         this.editTodo = undefined;
         this.editTodoId = undefined;
         this.editTodoConfirm = undefined;
         this.getTodos();
+        this.alertService.info(
+          `"${data.updatedTodo.todo}" updated successfully!`,
+          this.options
+        );
       });
   }
 }

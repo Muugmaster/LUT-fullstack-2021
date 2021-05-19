@@ -81,7 +81,10 @@ export class AuthService {
     return this.http.get(`${this.todoUrl}/${id}`, authHeader);
   }
 
-  confirmTodo(todo: any, id: string) {
+  confirmTodo(
+    todo: { todo: string | undefined; confirm: boolean | undefined },
+    id: string
+  ) {
     this.loadToken();
 
     const authHeader = {
@@ -94,7 +97,7 @@ export class AuthService {
     return this.http.put(`${this.todoUrl}/${id}`, todo, authHeader);
   }
 
-  addTodo(todo: any) {
+  addTodo(todo: { todo: string | undefined; confirm: boolean | undefined }) {
     this.loadToken();
 
     const authHeader = {

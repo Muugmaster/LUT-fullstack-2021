@@ -1,13 +1,6 @@
 <div class="card mx-auto shadow col-sm-6">
   <div class="card-body">
     <h3 class="card-title text-center">Login</h3>
-    <div
-      *ngIf="show"
-      class="mx-auto mt-2 col-sm-9 alert alert-{{ type }}"
-      role="alert"
-    >
-      {{ message }}
-    </div>
     <form class="form-signin" (submit)="onLoginSubmit()">
       <div class="form-group col-sm-9 mx-auto">
         <label for="Username">Username</label>

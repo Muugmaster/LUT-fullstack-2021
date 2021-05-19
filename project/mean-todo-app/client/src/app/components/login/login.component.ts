@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { AlertService } from '../../_alert';
 
 @Component({
   selector: 'app-login',
@@ -15,18 +16,18 @@ export class LoginComponent implements OnInit {
   message!: string;
   type!: string;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  options = {
+    autoClose: true,
+    keepAfterRouteChange: true,
+  };
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    public alertService: AlertService
+  ) {}
 
   ngOnInit(): void {}
-
-  showNotification(msg: string, type: string, timeout: number, show?: boolean) {
-    this.show = true || show;
-    this.message = msg;
-    this.type = type;
-    setTimeout(() => {
-      this.show = false;
-    }, timeout);
-  }
 
   clearForm() {
     this.username = '';
@@ -45,13 +46,12 @@ export class LoginComponent implements OnInit {
         console.log('LOGGED IN');
         this.authService.storeUserData(data.token, data.user);
         this.router.navigate(['/dashboard']);
+        this.alertService.success('You are logged in!', this.options);
       } else {
-        this.showNotification(
-          data.message ? data.message : 'Something went wrong',
-          'danger',
-          3000
+        this.alertService.error(
+          data.message ? data.message : 'Something went wrong!',
+          this.options
         );
-        this.clearForm();
       }
     });
   }
