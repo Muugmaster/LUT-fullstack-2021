@@ -102,9 +102,17 @@ todosRouter.delete(
   passport.authenticate('jwt', { session: false }),
   async (req: Request, res: Response) => {
     const id = req.params.id
-    // const user = await User.findById((req as any).user!._id)
+    const user = await User.findById((req as any).user!._id)
 
     const deletedTodo = await Todo.deleteOne({ _id: id })
+
+    user!.todos = user!.todos.filter((todo) => {
+      console.log('todo', (todo as any)._id.toString())
+      console.log('id', id)
+      return (todo as any).toString() !== id
+    })
+
+    await user!.save()
 
     res.status(204).json({ success: true, deletedTodo })
   }

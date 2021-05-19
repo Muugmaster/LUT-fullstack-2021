@@ -15,6 +15,7 @@ export class AuthService {
   private registerUrl = 'http://localhost:5000/api/users/register';
   private loginUrl = 'http://localhost:5000/api/users/authenticate';
   private todoUrl = 'http://localhost:5000/api/todos';
+  private profileUrl = 'http://localhost:5000/api/users/profile';
 
   authToken!: string | null;
   user: IUser | undefined;
@@ -121,6 +122,17 @@ export class AuthService {
     };
 
     return this.http.delete(`${this.todoUrl}/${id}`, authHeader);
+  }
+
+  getProfile() {
+    this.loadToken();
+    const authHeader = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.authToken}`,
+      }),
+    };
+    return this.http.get(this.profileUrl, authHeader);
   }
 
   loggedIn() {
