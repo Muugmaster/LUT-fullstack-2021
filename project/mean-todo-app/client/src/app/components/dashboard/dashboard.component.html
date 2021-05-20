@@ -1,7 +1,10 @@
 <div class="card mx-auto shadow col-sm-6">
   <div class="card-body">
-    <h2 *ngIf="!todos" class="page-header text-center">Add some To Do's!</h2>
-    <h2 *ngIf="todos" class="page-header text-center">
+    <h2 *ngIf="!todos && user" class="page-header text-center">
+      {{ user.username }} add some To Do's!
+    </h2>
+    <h2 *ngIf="todos && user" class="page-header text-center">
+      Hey {{ user.username }} you have:
       <span class="badge bg-secondary">{{ todos.length }}</span>
       To Do's
     </h2>

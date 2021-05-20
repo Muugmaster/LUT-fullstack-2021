@@ -11,6 +11,7 @@ import { AlertService } from 'src/app/_alert';
 })
 export class DashboardComponent implements OnInit {
   todos: any;
+  user: any;
 
   todo: string | undefined;
   confirm: boolean | undefined;
@@ -32,6 +33,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTodos();
+    this.getProfile();
   }
 
   getTodos() {
@@ -43,6 +45,20 @@ export class DashboardComponent implements OnInit {
       (err) => {
         console.log(err);
         this.todos = undefined;
+        return false;
+      }
+    );
+  }
+
+  getProfile() {
+    this.authService.getProfile().subscribe(
+      (data: any) => {
+        console.log(data.todos);
+        this.user = data.user;
+      },
+      (err) => {
+        console.log(err);
+        this.user = undefined;
         return false;
       }
     );

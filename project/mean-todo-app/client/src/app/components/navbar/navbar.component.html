@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">MEAN ToDo App</a>
+    <a class="navbar-brand" [routerLink]="['/']">MEAN ToDo App</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -19,7 +19,7 @@
           [routerLinkActive]="['active']"
           [routerLinkActiveOptions]="{ exact: true }"
         >
-          <a class="nav-link active" [routerLink]="['/']">Home</a>
+          <a class="nav-link" [routerLink]="['/']">Home</a>
         </li>
       </ul>
     </div>
