@@ -9,6 +9,21 @@ Simple to do app build from scratch using MEAN stack.
 - [Angular](https://angular.io/)
 - [Node.js](https://nodejs.org/en/)
 
+## Scripts
+
+These scripts are for backend server so use this in root of this mean-todo-app folder.
+
+- `npm run dev`
+  - starts backend server in development mode.
+- `npm run build`
+  - builds backend server
+- `npm run build:client`
+  - builds client side
+- `npm run build:all`
+  - builds server and client side
+- `npm start`
+  - starts server on production mode. **after build!**
+
 ## Installation:
 
 1. Clone this repository:
@@ -39,7 +54,7 @@ cd client
 npm install
 ```
 
-5. In root of project run build script to run prod build
+5. In root of project run build script to run **production** build
 
 ```sh
 npm run build:all
@@ -47,7 +62,19 @@ npm run build:all
 
 6. Go to `http://localhost:5000`
 
-### Run in Docker
+## OR
+
+5. Start development build. Server and client side separetly:
+
+```sh
+npm run dev
+cd client
+ng serve --open
+```
+
+6. Backend API starts at: `http://localhost:5000` and client side angular app at: `http://localhost:4200`
+
+## Run in Docker
 
 If you have docker installed on your machine you can easily run this project:
 
