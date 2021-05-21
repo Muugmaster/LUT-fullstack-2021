@@ -1,4 +1,5 @@
-import express, { Response } from 'express'
+import express, { Response, Request } from 'express'
+import path from 'path'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import cors from 'cors'
@@ -17,12 +18,13 @@ app.use(passport.initialize())
 app.use(passport.session())
 passportConfig(passport)
 app.use(morgan('tiny'))
+app.use(express.static(__dirname + '/client'))
 
 app.use('/api/users', userRouter)
 app.use('/api/todos', todoRouter)
 
-app.get('/ping', (_, res: Response) => {
-  res.send('<h2>pong</h2>')
+app.get('*', (req: Request, res: Response) => {
+  res.sendFile(path.resolve(__dirname, 'client', 'index.html'))
 })
 
 module.exports = app
