@@ -20,6 +20,8 @@ WORKDIR /app
 
 COPY . .
 
+RUN rm -rf client
+
 RUN useradd -m myuser
 
 USER myuser
