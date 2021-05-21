@@ -37,14 +37,14 @@ export class RegisterComponent implements OnInit {
 
     // Check fields
     if (!this.validate.validateUserRegister(user)) {
-      console.log('fill fields');
+      // console.log('fill fields');
       this.alertService.error('Please fill all fields!', this.options);
       return false;
     }
 
     // Check email
     if (!this.validate.validateEmail(user.email)) {
-      console.log('email is wrong');
+      // console.log('email is wrong');
       this.alertService.error('Check email address!', this.options);
       return false;
     }

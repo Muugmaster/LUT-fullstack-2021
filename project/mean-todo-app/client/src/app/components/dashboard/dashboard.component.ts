@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
   getTodos() {
     this.authService.getUserTodos().subscribe(
       (data: any) => {
-        console.log(data.todos);
+        // console.log(data.todos);
         this.todos = data.todos;
       },
       (err) => {
@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
   getProfile() {
     this.authService.getProfile().subscribe(
       (data: any) => {
-        console.log(data.todos);
+        // console.log(data.todos);
         this.user = data.user;
       },
       (err) => {
@@ -65,9 +65,9 @@ export class DashboardComponent implements OnInit {
   }
 
   getTodo(id: string) {
-    console.log('id', id);
+    // console.log('id', id);
     return this.authService.getOneUserTodo(id).subscribe((data: any) => {
-      console.log(data);
+      // console.log(data);
       this.editTodo = data.todo.todo;
       this.editTodoId = data.todo.id;
       this.editTodoConfirm = data.todo.confirm;
@@ -81,7 +81,7 @@ export class DashboardComponent implements OnInit {
     };
 
     return this.authService.addTodo(todo).subscribe((data: any) => {
-      console.log(data);
+      // console.log(data);
       if (data && data.success) {
         this.todo = undefined;
         this.getTodos();
@@ -99,7 +99,7 @@ export class DashboardComponent implements OnInit {
   }
 
   delTodo(id: string) {
-    console.log('delId', id);
+    // console.log('delId', id);
     return this.authService.delTodo(id).subscribe((data) => {
       this.getTodos();
       this.alertService.warn('To do deleted!', this.options);
@@ -107,9 +107,9 @@ export class DashboardComponent implements OnInit {
   }
 
   confirmTodo(id: string) {
-    console.log('id', id);
+    // console.log('id', id);
     return this.authService.getOneUserTodo(id).subscribe((data: any) => {
-      console.log(data.todo);
+      // console.log(data.todo);
 
       const updatedTodo = {
         todo: data.todo.todo,
@@ -117,14 +117,14 @@ export class DashboardComponent implements OnInit {
       };
 
       this.authService.confirmTodo(updatedTodo, id).subscribe((upData: any) => {
-        console.log('put', upData);
+        // console.log('put', upData);
         this.getTodos();
       });
     });
   }
 
   updateTodo() {
-    console.log('id', this.editTodoId);
+    // console.log('id', this.editTodoId);
 
     const updatedTodo: {
       todo: string | undefined;
@@ -137,7 +137,7 @@ export class DashboardComponent implements OnInit {
     this.authService
       .confirmTodo(updatedTodo, this.editTodoId!)
       .subscribe((data: any) => {
-        console.log('update   ', data);
+        // console.log('update   ', data);
         this.editTodo = undefined;
         this.editTodoId = undefined;
         this.editTodoConfirm = undefined;

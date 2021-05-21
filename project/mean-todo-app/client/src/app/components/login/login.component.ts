@@ -41,9 +41,9 @@ export class LoginComponent implements OnInit {
     };
 
     this.authService.authenticateUser(user).subscribe((data) => {
-      console.log(data);
+      // console.log(data);
       if (data && data.success) {
-        console.log('LOGGED IN');
+        // console.log('LOGGED IN');
         this.authService.storeUserData(data.token, data.user);
         this.router.navigate(['/dashboard']);
         this.alertService.success('You are logged in!', this.options);
