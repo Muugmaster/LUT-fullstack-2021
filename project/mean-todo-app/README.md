@@ -26,6 +26,12 @@ These scripts are for backend server so use this in root of this mean-todo-app f
 
 ## Installation:
 
+Start by installing [Angular CLI](https://angular.io/cli) if you dont already have it.
+
+```sh
+npm install -g @angular/cli
+```
+
 1. Clone this repository:
 
 ```sh
