@@ -9,6 +9,10 @@ Simple to do app build from scratch using MEAN stack.
 - [Angular](https://angular.io/)
 - [Node.js](https://nodejs.org/en/)
 
+## Syles:
+
+- [Bootstrap](https://getbootstrap.com/)
+
 ## Scripts
 
 These scripts are for backend server so use this in root of this mean-todo-app folder.
