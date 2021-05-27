@@ -60,13 +60,19 @@ cd client
 npm install
 ```
 
-5. In root of project run build script to run **production** build
+5. In root of project run build script to create **production** build
 
 ```sh
 npm run build:all
 ```
 
-6. Go to `http://localhost:5000`
+6. Start production build:
+
+```sh
+npm start
+```
+
+7. Go to `http://localhost:5000`
 
 ## OR
 
